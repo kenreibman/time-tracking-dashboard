@@ -159,7 +159,7 @@ button {
 }
 @media screen and (min-width: 500px) {
   .tracker__profile-name {
-    line-height: 4rem;
+    line-height: 5rem;
   }
 }
 
@@ -226,6 +226,7 @@ button {
 .activity__info {
   position: relative;
   background-color: var(--dark-blue);
+  border-radius: var(--br);
   z-index: 5;
   grid-row: 2 / 3;
   grid-column: 1 / 2;
@@ -269,6 +270,7 @@ button {
 .activity__name {
   color: #fff;
   font-weight: 500;
+  font-size: 1.8rem;
 }
 
 .activity__options-ellipsis {
