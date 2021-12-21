@@ -119,7 +119,7 @@ const clearActivities = () => {
 
 const renderCards = (clickedOption) => {
   clearActivities()
-  const activityTracker = document.querySelector('section.tracker')
+  const activityTracker = document.querySelector('main.tracker')
 
   const calcTimeframe = (option) => {
     if (option === 'daily') {
