@@ -103,42 +103,43 @@ let data = [
     }
   ]
 
-const buttons = document.querySelectorAll('.tracker__option')
+const buttons = document.querySelectorAll('.tracker__option') //1. grab buttons (3)
 
-const activateClickedButton = (button) => {
-  buttons.forEach(b => b.classList.remove('active'))
-  button.classList.add('active')
+const activateClickedButton = (button) => { //3. when we click on a button (daily, weekly monthly), it passes the function 
+  buttons.forEach(b => b.classList.remove('active')) //if any other button has the class of active, it gets removed
+  button.classList.add('active') //add an active class.
 }
 
-//Function clears activities so they don't stack.
+//11. Function that clears activities so they don't stack.
 const clearActivities = () => {
-  const activities = document.querySelectorAll('.tracker__activity')
-  activities.forEach(a => a.remove())
+  const activities = document.querySelectorAll('.tracker__activity')//cards have the class tracker__activity from adding the classList
+  activities.forEach(a => a.remove())//removes from HTML -> goto step 11
 
 }
 
 const renderCards = (clickedOption) => {
-  clearActivities()
-  const activityTracker = document.querySelector('main.tracker')
+  clearActivities() //11. call the clearActivities function when clicked. goto step 12
+  const activityTracker = document.querySelector('main.tracker')  //8. this is the main grid! You want to append all your elements to this grid. Grab the tracker and goto step 9
 
-  const calcTimeframe = (option) => {
-    if (option === 'daily') {
+  const calcTimeframe = (option) => { //5. if our option is
+    if (option === 'daily') { //= daily, you return yesterday.
       return 'Yesterday'
-    } else if (option === 'weekly') {
+    } else if (option === 'weekly') { //otherwise, if weekly return last week
       return 'Last Week'
-    } else if (option === 'monthly') {
+    } else if (option === 'monthly') { // if monthly, return last month.
       return 'Last Month'
     }
   }
 
-  data.forEach(activity => {
-    const name = activity.title
-    const activityClass = name.toLowerCase().replace(' ', '-') //Removing spaces from titles.
-    const timeframeData = activity.timeframes[clickedOption]
-    const previousTimeframe = calcTimeframe(clickedOption)
-    const section = document.createElement('section')
-    section.classList.add('tracker__activity', activityClass)
-    const stringToInject = 
+  data.forEach(activity => { //4. create a loop that selects each activity
+    const name = activity.title //grab the name of each activity
+    const activityClass = name.toLowerCase().replace(' ', '-') //create a class and removing spaces from titles.
+    const timeframeData = activity.timeframes[clickedOption]//grab timeframes by selecting from JSON activity(object) and timeframes(string). Can only access string with []
+    const previousTimeframe = calcTimeframe(clickedOption) // if we clicked on daily, previous time frame says "yesterday, last week, last month" go to step 5
+
+    const section = document.createElement('section') //6. creating elements in JS to add to HTML
+    section.classList.add('tracker__activity', activityClass)//add a class of tracker__activity and an activityClass, this gets APPENDED to the HTML
+    const stringToInject = //creating a string to inject, use backticks. Variables let you change the name --> goto step 7
     `
         <div class="activity__bg">
           <img src="images/icon-${activityClass}.svg" alt="" aria-hidden="true">
@@ -146,7 +147,7 @@ const renderCards = (clickedOption) => {
         <div class="activity__info">
           <header class="activity__header">
             <h2 class="activity__name">${name}</h2>
-            <button class="activity__options-ellipsis" aria-label="Options">
+            <button class="activity__options-ellipsis" aria-label="options">
               <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/>
               </svg>
@@ -162,19 +163,19 @@ const renderCards = (clickedOption) => {
           </div>
         </div>
     `
-    section.innerHTML = stringToInject
-    activityTracker.append(section)
+    section.innerHTML = stringToInject //7. adds entire string to HTML stringToInject is variable name --> goto step 8
+    activityTracker.append(section) //9. keep this inside the forEach loop. Each one of these selections that we created, we want to append to the tracker. goto step 10
   });
 };
 
-buttons.forEach(button =>{
+buttons.forEach(button =>{//2. use forEach button
 
-    button.addEventListener('click', () => {
-        activateClickedButton(button)
-        const clickedOption = button.dataset.option
-        renderCards(clickedOption)
+    button.addEventListener('click', () => { // add an event listener of click, when we click the button something happens
+        activateClickedButton(button) //when clicked it runs a function actvateClickedButton
+        const clickedOption = button.dataset.option //grabs the information by accessing button.dataset.option
+        renderCards(clickedOption) //runs renderCards
     })
 })
 
 // Website loads "clicked"
-buttons[1].click()
+buttons[1].click() //12. an already selected state when website loads.
